@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "World.hpp"
 #include "Organism.hpp"
 
@@ -6,18 +7,29 @@ using namespace std;
 
 World::World()
 {
-    cout << "TURN: " << turn_number << endl;
-    for(int i=0; i<MAP_X; i++)
+    for(int i=0; i<MAP_Y; i++)
     {
-        for(int j=0; j<MAP_Y; j++)
+        for(int j=0; j<MAP_X; j++)
         {
             world_map[i][j] = nullptr;
         }
     }
-
-    for(int i=0; i<MAP_X; i++)
+}
+World::~World()
+{
+    for(size_t i=0; i<organisms.size(); i++)
     {
-        for(int j=0; j<MAP_Y; j++)
+        delete organisms[i];
+    }
+}
+
+void World::draw_world()
+{
+    cout << "TURN: " << turn_number << endl;
+
+    for(int i=0; i<MAP_Y; i++)
+    {
+        for(int j=0; j<MAP_X; j++)
         {
             if(world_map[i][j] == nullptr)
             {
@@ -25,39 +37,58 @@ World::World()
             }
             else
             {
-                world_map[i][j]->draw();
+                cout << world_map[i][j]->draw() << " ";
             }
         }
         cout << endl;
     }
 }
 
-World::~World()
+bool compare_organisms(Organism* a, Organism* b)
 {
-};
-
-void World::draw_world()
-{
-    cout << "TURN: " << turn_number << endl;
-
-    for(int i=0; i<MAP_X; i++)
+    if(a->get_initiative() != b->get_initiative())
     {
-        for(int j=0; j<MAP_Y; j++)
-        {
-            if(world_map[i][j] == nullptr)
-            {
-                cout << ". ";
-            }
-            else
-            {
-                world_map[i][j]->draw();
-            }
-        }
-        cout << endl;
+        return a->get_initiative() > b->get_initiative();
+    }
+    else
+    {
+        return a->get_age() > b->get_age();
     }
 }
 
 void World::make_turn()
 {
     turn_number++;  
+
+    sort(organisms.begin(), organisms.end(), compare_organisms);
+
+    for(size_t i=0; i<organisms.size(); i++)
+    {
+        if(organisms[i]->get_age() > 0)
+        {
+            organisms[i]->action();
+        }
+    }
+
+    for(size_t i=0; i<organisms.size(); i++)
+    {
+        organisms[i]->increment_age();
+    }
 };
+
+bool World::is_tile_free(int x, int y)
+{
+    if(world_map[y][x] != nullptr)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void World::add_organism(Organism* organism)
+{
+    world_map[organism->get_position_y()][organism->get_position_x()] = organism;
+
+    organisms.push_back(organism);
+}

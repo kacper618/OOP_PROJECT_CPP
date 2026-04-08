@@ -1,15 +1,27 @@
 #include <iostream>
 #include <conio.h>
+#include <ctime>
+#include <cstdlib>
 #include "World.hpp"
+#include "Organism.hpp"
+#include "Plant.hpp"
+#include "Grass.hpp"
 
 using namespace std;
 
 int main()
 {
-    World world;
+    srand(time(nullptr));
 
     cout << "\033[?25l"; // Hide cursor
 
+    World world;
+
+    Organism* G = new Grass(5, 5, &world);
+
+    world.add_organism(G);
+    world.draw_world();
+    
     while(true)
     {
         char key_input = getch();
@@ -25,5 +37,7 @@ int main()
             world.draw_world();
         }
     }
+
+    
     return 0;
 }

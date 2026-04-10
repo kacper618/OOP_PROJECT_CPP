@@ -37,7 +37,6 @@ int main()
             world.draw_world();
         }
     }
-
     
     return 0;
 }

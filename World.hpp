@@ -13,6 +13,8 @@ class World
     public:
         World();
         virtual ~World();
+        Organism* get_organism(int x, int y);
+        void move_organism(Organism* organism, int x, int y);
         void draw_world();
         void make_turn();
         bool is_tile_free(int x, int y);

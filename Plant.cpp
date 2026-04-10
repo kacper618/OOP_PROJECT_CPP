@@ -55,6 +55,6 @@ void Plant::action()
         
 }
 
-void Plant::collision()
+void Plant::collision(Organism* eater)
 {
 }

@@ -7,9 +7,9 @@ using namespace std;
 
 World::World()
 {
-    for(int i=0; i<MAP_Y; i++)
+    for(int i = 0; i < MAP_Y; i++)
     {
-        for(int j=0; j<MAP_X; j++)
+        for(int j = 0; j < MAP_X; j++)
         {
             world_map[i][j] = nullptr;
         }
@@ -46,9 +46,9 @@ void World::draw_world()
 {
     cout << "TURN: " << turn_number << endl;
 
-    for(int i=0; i<MAP_Y; i++)
+    for(int i = 0; i < MAP_Y; i++)
     {
-        for(int j=0; j<MAP_X; j++)
+        for(int j = 0; j < MAP_X; j++)
         {
             if(world_map[i][j] == nullptr)
             {
@@ -81,7 +81,7 @@ void World::make_turn()
 
     sort(organisms.begin(), organisms.end(), compare_organisms);
 
-    for(size_t i=0; i<organisms.size(); i++)
+    for(size_t i = 0; i < organisms.size(); i++)
     {
         if(organisms[i]->get_is_dead())
         {
@@ -94,16 +94,19 @@ void World::make_turn()
         }
     }
 
-    for(size_t i=0; i<organisms.size(); i++)
+    for(size_t i = 0; i < organisms.size(); i++)
     {
         organisms[i]->increment_age();
     }
 
-    for(int i=organisms.size()-1; i>=0; i--)
+    for(int i = organisms.size() - 1; i >= 0; i--)
     {
         if(organisms[i]->get_is_dead())
         {
-            world_map[organisms[i]->get_position_y()][organisms[i]->get_position_x()] = nullptr;
+            if(world_map[organisms[i]->get_position_y()][organisms[i]->get_position_x()] == organisms[i])
+            {
+                world_map[organisms[i]->get_position_y()][organisms[i]->get_position_x()] = nullptr;
+            }
             
             delete organisms[i];
             

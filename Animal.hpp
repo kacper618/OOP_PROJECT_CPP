@@ -7,6 +7,7 @@ class Animal: public Organism
         Animal(int x, int y, World* w, int s, int i);
         void action() override;
         void collision(Organism* organism) override;
+        bool is_animal() override;
     protected:
         void reproduce(Organism* organism);
         void fight(Organism* organism);

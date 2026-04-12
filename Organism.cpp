@@ -19,9 +19,19 @@ int Organism::get_initiative()
     return initiative;
 }
 
+int Organism::get_strength()
+{
+    return strength;
+}
+
 bool Organism::get_is_dead()
 {
     return is_dead;
+}
+
+bool Organism::is_animal()
+{
+    return false;
 }
 
 void Organism::set_position_x(int x)
@@ -37,6 +47,11 @@ void Organism::set_position_y(int y)
 void Organism::set_is_dead(bool d)
 {
     is_dead = d;
+}
+
+void Organism::set_strength(int s)
+{
+    strength = s;
 }
 
 int Organism::get_age()

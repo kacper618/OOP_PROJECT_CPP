@@ -23,15 +23,14 @@ void Plant::action()
     int free_tile_y[9];
     int free_tiles_count = 0;
 
-    for(int i=position_y-1; i<=position_y+1; i++)
+    for(int i = position_y - 1; i <= position_y + 1; i++)
     {
-        for(int j=position_x-1; j<=position_x+1; j++)
+        for(int j = position_x - 1; j <= position_x + 1; j++)
         {
-            if (j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && (j != position_x || i != position_y) && world->is_tile_free(j, i))
+            if(j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && world->is_tile_free(j, i))
             //Checking if current tile:
             //1) is not out of map bounds
-            //2) is not the current plant position
-            //3) is empty
+            //2) is empty
             {
                 free_tile_x[free_tiles_count] = j;
                 free_tile_y[free_tiles_count] = i;
@@ -55,6 +54,8 @@ void Plant::action()
         
 }
 
-void Plant::collision(Organism* eater)
+void Plant::collision(Organism* organism)
 {
+    this->set_is_dead(true);
+    world->move_organism(organism, this->position_x, this->position_y);
 }

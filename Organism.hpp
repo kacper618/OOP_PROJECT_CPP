@@ -17,7 +17,9 @@ class Organism
         virtual char draw() = 0;
         virtual Organism* clone(int x, int y) = 0;
         virtual ~Organism();
+        virtual bool is_animal();
         int get_initiative();
+        int get_strength();
         int get_age();
         int get_position_x();
         int get_position_y();
@@ -25,5 +27,6 @@ class Organism
         void set_position_x(int x);
         void set_position_y(int y);
         void set_is_dead(bool d);
+        void set_strength(int s);
         void increment_age();
 };

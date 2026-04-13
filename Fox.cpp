@@ -21,7 +21,7 @@ Organism* Fox::clone(int x, int y)
 
 void Fox::action()
 {
-    int tile_x[9]; //there are 9 tiles (1 central tile + 8 tiles around)
+    int tile_x[9]; 
     int tile_y[9];
     int tiles_count = 0;
 

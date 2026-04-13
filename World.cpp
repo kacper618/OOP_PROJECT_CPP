@@ -113,7 +113,7 @@ void World::make_turn()
             organisms.erase(organisms.begin() + i);
         }
     }
-};
+}
 
 bool World::is_tile_free(int x, int y)
 {
@@ -130,4 +130,6 @@ void World::add_organism(Organism* organism)
     world_map[organism->get_position_y()][organism->get_position_x()] = organism;
 
     organisms.push_back(organism);
+
+    organism->increment_age();
 }

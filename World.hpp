@@ -19,4 +19,5 @@ class World
         void make_turn();
         bool is_tile_free(int x, int y);
         void add_organism(Organism* organism);
+        char human_dir;
 };

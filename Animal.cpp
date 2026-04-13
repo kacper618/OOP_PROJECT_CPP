@@ -25,7 +25,7 @@ void Animal::action()
     {
         for(int j = position_x - 1; j <= position_x + 1; j++)
         {
-            if (j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && (j != position_x || i != position_y))
+            if(j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && (j != position_x || i != position_y))
             //checking if tile is not the central tile and if it is in map bounds
             {
                 tile_x[tiles_count] = j;

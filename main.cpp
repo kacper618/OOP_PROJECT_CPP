@@ -29,40 +29,46 @@ int main()
 
     Organism* G = new Grass(5, 5, &world);
 
-    Organism* O = new Sow_thistle(9, 9, &world);
+    Organism* O = new Sow_thistle(8, 9, &world);
 
-    Organism* U1 = new Guarana(4, 7, &world);
+    Organism* U = new Guarana(4, 7, &world);
 
-    Organism* B = new Belladonna(2, 8, &world);
+    Organism* B = new Belladonna(18, 8, &world);
 
-    Organism* X = new Hogweed(3, 0, &world);
+    Organism* X = new Hogweed(13, 19, &world);
 
     Organism* W1 = new Wolf(3, 2, &world);
-    Organism* W2 = new Wolf(0, 0, &world);
+    Organism* W2 = new Wolf(0, 11, &world);
 
-    Organism* F = new Fox(7, 5, &world);
+    Organism* F1 = new Fox(7, 5, &world);
+    Organism* F2 = new Fox(10, 9, &world);
 
-    Organism* T = new Turtle(5, 8, &world);
+    Organism* T1 = new Turtle(5, 8, &world);
+    Organism* T2 = new Turtle(19, 19, &world);
 
-    Organism* S1 = new Sheep(6, 7, &world);
-    Organism* S2 = new Sheep(7, 8, &world);
+    Organism* S1 = new Sheep(0, 7, &world);
+    Organism* S2 = new Sheep(13, 8, &world);
 
-    Organism* A = new Antelope(4, 9, &world);
+    Organism* A1 = new Antelope(4, 9, &world);
+    Organism* A2 = new Antelope(13, 0, &world);
 
     Organism* H = new Human(1, 5, &world);
 
     world.add_organism(G);
-    //world.add_organism(O);
-    //world.add_organism(B);
-    //world.add_organism(X);
-    world.add_organism(U1);
+    world.add_organism(O);
+    world.add_organism(B);
+    world.add_organism(X);
+    world.add_organism(U);
     world.add_organism(W1);
     world.add_organism(W2);
-    world.add_organism(F);
-    world.add_organism(T);
+    world.add_organism(F1);
+    world.add_organism(F2);
+    world.add_organism(T1);
+    world.add_organism(T2);
     world.add_organism(S1);
     world.add_organism(S2);
-    world.add_organism(A);
+    world.add_organism(A1);
+    world.add_organism(A2);
     world.add_organism(H);
     world.draw_world();
     

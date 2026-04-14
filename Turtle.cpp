@@ -15,6 +15,7 @@ char Turtle::draw() const
 
 Organism* Turtle::clone(int x, int y)
 {
+    cout << "Turtle born at: (" << y << ", " << x << ")" << endl;
     return new Turtle(x, y, this->world);
 }
 
@@ -31,4 +32,9 @@ void Turtle::action()
 bool Turtle::has_deflected_attack(Organism* organism) const
 {
     return true;
+}
+
+string Turtle::organism_name()
+{
+    return "Turtle";
 }

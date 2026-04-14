@@ -15,5 +15,11 @@ char Sheep::draw() const
 
 Organism* Sheep::clone(int x, int y)
 {
+    cout << "Sheep born at: (" << y << ", " << x << ")" << endl;
     return new Sheep(x, y, this->world);
+}
+
+string Sheep::organism_name()
+{
+    return "Sheep";
 }

@@ -8,4 +8,5 @@ class Guarana: public Plant
         char draw() const override;
         Organism* clone(int x, int y) override;
         void collision(Organism* organism) override;
+        std::string organism_name() override;
 };

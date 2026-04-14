@@ -86,10 +86,16 @@ void Animal::fight(Organism* organism)
         world->move_organism(organism, this->get_position_x(), this->get_position_y());
         
         this->set_is_dead(true);
+        
+        cout << this->organism_name() << " was attacked and killed by " << organism->organism_name() 
+        << ": (" << organism->get_position_y() << ", " << organism->get_position_y() << ")" << endl;
     }
     else
     {
         organism->set_is_dead(true);
+
+        cout << this->organism_name() << " defended itself from " << organism->organism_name() 
+        << ": (" << this->get_position_y() << ", " << this->get_position_y() << ")" << endl;
     }
 }
 

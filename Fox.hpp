@@ -8,4 +8,5 @@ class Fox: public Animal
         char draw() const override;
         Organism* clone(int x, int y) override;
         void action() override;
+        std::string organism_name() override;
 };      

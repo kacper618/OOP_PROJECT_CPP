@@ -16,6 +16,7 @@ char Hogweed::draw() const
 
 Organism* Hogweed::clone(int x, int y)
 {
+    cout << "Sosnowsky's hogweed sowed at: (" << y << ", " << x << ")" << endl;
     return new Hogweed(x, y, this->world);
 }
 
@@ -41,8 +42,15 @@ void Hogweed::action()
         if(org != nullptr && org->is_animal())
         {
             org->set_is_dead(true);
+            cout << org->organism_name() << " died because of " << this->organism_name() 
+            << ": (" << org->get_position_y() << ", " << org->get_position_x() << ")" << endl;
         }
    }
 
     Plant::action();
+}
+
+string Hogweed::organism_name()
+{
+    return "Sosnowsky's hogweed";
 }

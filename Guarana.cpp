@@ -15,6 +15,7 @@ char Guarana::draw() const
 
 Organism* Guarana::clone(int x, int y)
 {
+    cout << "Guarana sowed at: (" << y << ", " << x << ")" << endl;
     return new Guarana(x, y, this->world);
 }
 
@@ -23,4 +24,9 @@ void Guarana::collision(Organism* organism)
     organism->set_strength(organism->get_strength() + 3);
 
     Plant::collision(organism);
+}
+
+string Guarana::organism_name()
+{
+    return "Guarana";
 }

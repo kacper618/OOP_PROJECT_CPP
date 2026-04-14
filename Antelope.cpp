@@ -16,6 +16,7 @@ char Antelope::draw() const
 
 Organism* Antelope::clone(int x, int y)
 {
+    cout << "Antelope born at: (" << y << ", " << x << ")" << endl;
     return new Antelope(x, y, this->world);
 }
 
@@ -49,5 +50,10 @@ void Antelope::fight(Organism* organism)
 int Antelope::get_move_range() const
 {
     return 2;
+}
+
+string Antelope::organism_name()
+{
+    return "Antelope";
 }
 

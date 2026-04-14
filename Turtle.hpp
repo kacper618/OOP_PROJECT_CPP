@@ -9,4 +9,5 @@ class Turtle: public Animal
         Organism* clone(int x, int y) override;
         void action() override;
         bool has_deflected_attack(Organism* organism) const override;
+        std::string organism_name() override;
 };

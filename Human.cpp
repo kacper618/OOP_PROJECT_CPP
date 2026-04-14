@@ -34,7 +34,7 @@ void Human::action()
     else if(current_key == 'a' || current_key == 'A') { target_x--; }
     else if(current_key == 'd' || current_key == 'D') { target_x++; }
 
-    if(target_x >= 0 && target_x < MAP_X && target_y >= 0 && target_y < MAP_Y)
+    if(target_x >= 0 && target_x < MAP_X && target_y >= 0 && target_y < MAP_Y && (target_x != position_x || target_y != position_y))
     {
         if(world->get_organism(target_x, target_y) == nullptr)
         {
@@ -62,10 +62,14 @@ void Human::magical_potion()
 {
     if(potion_cooldown == 0)
     {
-        potion_duration = 5;
-        potion_cooldown = 10;
+        potion_duration = POTION_DUR;
+        potion_cooldown = POTION_CD;
 
         strength += potion_duration;
     }
 }
 
+string Human::organism_name()
+{
+    return "Human";
+}

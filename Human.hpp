@@ -9,7 +9,7 @@ class Human: public Animal
         Organism* clone(int x, int y) override;
         void action() override;
         void magical_potion();
-    
+        std::string organism_name() override;
     private:
         int potion_duration = 0;
         int potion_cooldown = 0;

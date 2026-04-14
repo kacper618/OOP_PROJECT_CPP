@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 class World;
 
@@ -17,6 +18,7 @@ class Organism
         virtual void collision(Organism* organism) = 0;
         virtual char draw() const = 0;
         virtual Organism* clone(int x, int y) = 0;
+        virtual std::string organism_name() = 0;
         virtual ~Organism();
         virtual bool is_animal() const;
         virtual bool has_deflected_attack(Organism* organism) const;

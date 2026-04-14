@@ -15,6 +15,7 @@ char Sow_thistle::draw() const
 
 Organism* Sow_thistle::clone(int x, int y)
 {
+    cout << "Sow thistle sowed at: (" << y << ", " << x << ")" << endl;
     return new Sow_thistle(x, y, this->world);
 }
 
@@ -24,4 +25,9 @@ void Sow_thistle::action()
     {
         Plant::action();
     }
+}
+
+string Sow_thistle::organism_name()
+{
+    return "Sow thistle";
 }

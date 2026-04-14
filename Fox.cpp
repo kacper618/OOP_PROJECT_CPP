@@ -16,6 +16,7 @@ char Fox::draw() const
 
 Organism* Fox::clone(int x, int y)
 {
+    cout << "Fox born at: (" << y << ", " << x << ")" << endl;
     return new Fox(x, y, this->world);
 }
 
@@ -47,4 +48,9 @@ void Fox::action()
     {
         move_animal_to_random_tile(safe_count, safe_x, safe_y);
     }
+}
+
+string Fox::organism_name()
+{
+    return "Fox";
 }

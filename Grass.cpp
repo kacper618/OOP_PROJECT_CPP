@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Grass.hpp"
 
 using namespace std;
@@ -14,5 +15,11 @@ char Grass::draw() const
 
 Organism* Grass::clone(int x, int y)
 {
+    cout << "Grass sowed at: (" << y << ", " << x << ")" << endl;
     return new Grass(x, y, this->world);
+}
+
+string Grass::organism_name()
+{
+    return "Grass";
 }

@@ -15,5 +15,11 @@ char Wolf::draw() const
 
 Organism* Wolf::clone(int x, int y)
 {
+    cout << "Wolf born at: (" << y << ", " << x << ")" << endl;
     return new Wolf(x, y ,this->world);
+}
+
+string Wolf::organism_name()
+{
+    return "Wolf";
 }

@@ -19,25 +19,11 @@ Plant::Plant(int x, int y, World* w, int s)
 
 void Plant::action()
 {
-    int free_tile_x[9]; //there are 9 tiles (1 central tile + 8 tiles around)
+    int free_tile_x[9]; 
     int free_tile_y[9];
     int free_tiles_count = 0;
 
-    for(int i = position_y - 1; i <= position_y + 1; i++)
-    {
-        for(int j = position_x - 1; j <= position_x + 1; j++)
-        {
-            if(j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && world->is_tile_free(j, i))
-            //Checking if current tile:
-            //1) is not out of map bounds
-            //2) is empty
-            {
-                free_tile_x[free_tiles_count] = j;
-                free_tile_y[free_tiles_count] = i;
-                free_tiles_count++;
-            }
-        }
-    }
+    get_adjacent_tiles(position_x, position_y, 1, free_tiles_count, free_tile_x, free_tile_y, true);
 
     int sow = rand() % 10;
 

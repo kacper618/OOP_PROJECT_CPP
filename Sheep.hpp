@@ -5,6 +5,6 @@ class Sheep: public Animal
 {
     public:
         Sheep(int x, int y, World* w);
-        char draw() override;
+        char draw() const override;
         Organism* clone(int x, int y) override;
 };

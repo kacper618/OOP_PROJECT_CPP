@@ -5,7 +5,7 @@ class Sow_thistle: public Plant
 {
     public:
         Sow_thistle(int x, int y, World* w);
-        char draw() override;
+        char draw() const override;
         Organism* clone(int x, int y) override;
         void action() override;
 };

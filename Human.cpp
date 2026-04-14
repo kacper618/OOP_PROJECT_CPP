@@ -11,7 +11,7 @@ Human::Human(int x, int y, World* w)
 {
 }
 
-char Human::draw()
+char Human::draw() const
 {
     return 'H';
 }
@@ -26,7 +26,7 @@ void Human::action()
     int target_x = position_x;
     int target_y = position_y;
     
-    char current_key = world->human_dir; 
+    char current_key = world->get_human_dir(); 
 
     if(current_key == 'e' || current_key == 'E') { magical_potion(); return; }
     else if(current_key == 'w' || current_key == 'W') { target_y--; }

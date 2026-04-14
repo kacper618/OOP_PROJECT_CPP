@@ -5,8 +5,8 @@ class Turtle: public Animal
 {
     public:
         Turtle(int x, int y, World* w);
-        char draw() override;
+        char draw() const override;
         Organism* clone(int x, int y) override;
         void action() override;
-        void collision(Organism* organism) override;
+        bool has_deflected_attack(Organism* organism) const override;
 };

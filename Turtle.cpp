@@ -8,7 +8,7 @@ Turtle::Turtle(int x, int y, World* w)
 {
 }
 
-char Turtle::draw()
+char Turtle::draw() const
 {
     return 'T';
 }
@@ -28,17 +28,7 @@ void Turtle::action()
     }
 }
 
-void Turtle::collision(Organism* organism)
-{   
-    if(this->draw() == organism->draw()) //breeding
-    {
-        Animal::collision(organism);
-    }
-    else if(organism->get_strength() < 5) //reflecting attack
-    {
-    }
-    else
-    {
-        Animal::collision(organism); //fighting
-    }
+bool Turtle::has_deflected_attack(Organism* organism) const
+{
+    return true;
 }

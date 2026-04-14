@@ -8,7 +8,7 @@ Guarana::Guarana(int x, int y, World* w)
 {
 }
 
-char Guarana::draw()
+char Guarana::draw() const
 {
     return 'U';
 }

@@ -7,7 +7,7 @@ Grass::Grass(int x, int y, World* w)
 {
 }
 
-char Grass::draw()
+char Grass::draw() const
 {
     return 'G';
 }

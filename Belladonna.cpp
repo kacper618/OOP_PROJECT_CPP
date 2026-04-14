@@ -8,7 +8,7 @@ Belladonna::Belladonna(int x, int y, World* w)
 {
 }
 
-char Belladonna::draw()
+char Belladonna::draw() const
 {
     return 'B';
 }

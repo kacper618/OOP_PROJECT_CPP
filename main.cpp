@@ -87,14 +87,14 @@ int main()
         if(key_input == 'w' || key_input == 'a' || key_input == 's' || key_input == 'd' || key_input == 'e' || 
            key_input == 'W' || key_input == 'A' || key_input == 'S' || key_input == 'D' || key_input == 'E')
         {
-            world.human_dir = key_input; 
+            world.set_human_dir(key_input); 
             system("cls");
             world.make_turn();
             world.draw_world();
         }
         else if(key_input == ' ')
         {
-            world.human_dir = ' '; //human stands still
+            world.set_human_dir(' '); //human stands still
             system("cls");
             world.make_turn();
             world.draw_world();

@@ -9,7 +9,7 @@ Fox::Fox(int x, int y, World* w)
 {
 }
 
-char Fox::draw()
+char Fox::draw() const
 {
     return 'F';
 }
@@ -21,39 +21,30 @@ Organism* Fox::clone(int x, int y)
 
 void Fox::action()
 {
-    int tile_x[9]; 
+    int tile_x[9];
     int tile_y[9];
-    int tiles_count = 0;
+    int tile_count = 0;
 
-    for(int i = position_y - 1; i <= position_y + 1; i++)
+    get_adjacent_tiles(position_x, position_y, get_move_range(), tile_count, tile_x, tile_y, false);
+
+    int safe_x[9];
+    int safe_y[9];
+    int safe_count = 0;
+
+    for(int i = 0; i < tile_count; i++)
     {
-        for(int j = position_x - 1; j <= position_x + 1; j++)
+        Organism* occupant = world->get_organism(tile_x[i], tile_y[i]);
+        
+        if(occupant == nullptr || occupant->get_strength() <= this->strength)
         {
-            if(j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && (j != position_x || i != position_y))
-            {
-                if(world->is_tile_free(j, i) || world->get_organism(j, i)->get_strength() <= this->strength)
-                {
-                    tile_x[tiles_count] = j;
-                    tile_y[tiles_count] = i;
-                    tiles_count++;
-                }
-            }
+            safe_x[safe_count] = tile_x[i];
+            safe_y[safe_count] = tile_y[i];
+            safe_count++;
         }
     }
 
-    if(tiles_count > 0)
+    if(safe_count > 0)
     {
-        int rand_new_tile = rand() % tiles_count;
-
-        if(world->is_tile_free(tile_x[rand_new_tile], tile_y[rand_new_tile]))
-        {
-            world->move_organism(this, tile_x[rand_new_tile], tile_y[rand_new_tile]);
-        }
-        else
-        {
-            Organism* defender = world->get_organism(tile_x[rand_new_tile], tile_y[rand_new_tile]);
-
-           defender->collision(this);
-        }
+        move_animal_to_random_tile(safe_count, safe_x, safe_y);
     }
 }

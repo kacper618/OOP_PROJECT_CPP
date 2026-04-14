@@ -8,7 +8,7 @@ Sheep::Sheep(int x, int y, World* w)
 {
 }
 
-char Sheep::draw()
+char Sheep::draw() const
 {
     return 'S';
 }

@@ -5,8 +5,10 @@ class Antelope: public Animal
 {
     public:
         Antelope(int x, int y, World* w);
-        char draw() override;
+        char draw() const override;
         Organism* clone(int x, int y) override;
-        void action() override;
-        void collision(Organism* organism) override;
+        void fight(Organism* organism) override;
+        
+    protected:
+        int get_move_range() const override;
 };

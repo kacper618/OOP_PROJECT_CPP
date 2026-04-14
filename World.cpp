@@ -24,7 +24,7 @@ World::~World()
     }
 }
 
-Organism* World::get_organism(int x, int y)
+Organism* World::get_organism(int x, int y) const
 {
     return world_map[y][x];
 }
@@ -42,7 +42,7 @@ void World::move_organism(Organism* organism, int x, int y)
     world_map[y][x] = organism;
 }
 
-void World::draw_world()
+void World::draw_world() const
 {
     cout << "TURN: " << turn_number << endl;
 
@@ -63,7 +63,7 @@ void World::draw_world()
     }
 }
 
-bool compare_organisms(Organism* a, Organism* b)
+bool World::compare_organisms(Organism* a, Organism* b) 
 {
     if(a->get_initiative() != b->get_initiative())
     {
@@ -115,7 +115,7 @@ void World::make_turn()
     }
 }
 
-bool World::is_tile_free(int x, int y)
+bool World::is_tile_free(int x, int y) const
 {
     if(world_map[y][x] != nullptr)
     {
@@ -132,4 +132,14 @@ void World::add_organism(Organism* organism)
     organisms.push_back(organism);
 
     organism->increment_age();
+}
+
+char World::get_human_dir() const
+{
+    return human_dir;
+}
+
+void World::set_human_dir(char dir)
+{
+    human_dir = dir;
 }

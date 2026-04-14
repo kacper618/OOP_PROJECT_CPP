@@ -5,7 +5,7 @@ class Belladonna: public Plant
 {
     public:
         Belladonna(int x, int y, World* w);
-        char draw() override;
+        char draw() const override;
         Organism* clone(int x, int y) override;
         void collision(Organism* organism) override;
 };

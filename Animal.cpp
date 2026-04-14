@@ -15,45 +15,43 @@ Animal::Animal(int x, int y, World* w, int s, int i)
     initiative = i;
 }
 
-void Animal::action()
+void Animal::move_animal_to_random_tile(int& t_count, int t_x[], int t_y[])
 {
-    int tile_x[9]; //there are 9 tiles (1 central tile + 8 tiles around)
-    int tile_y[9];
-    int tiles_count = 0;
+    int rand_new_tile = rand() % t_count;
 
-    for(int i = position_y - 1; i <= position_y + 1; i++)
-    {
-        for(int j = position_x - 1; j <= position_x + 1; j++)
+        if(world->is_tile_free(t_x[rand_new_tile], t_y[rand_new_tile]))
         {
-            if(j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && (j != position_x || i != position_y))
-            //checking if tile is not the central tile and if it is in map bounds
-            {
-                tile_x[tiles_count] = j;
-                tile_y[tiles_count] = i;
-                tiles_count++;
-            }
-        }
-    }
-
-    if(tiles_count > 0)
-    {
-        int rand_new_tile = rand() % tiles_count;
-
-        if(world->is_tile_free(tile_x[rand_new_tile], tile_y[rand_new_tile]))
-        {
-            world->move_organism(this, tile_x[rand_new_tile], tile_y[rand_new_tile]);
+            world->move_organism(this, t_x[rand_new_tile], t_y[rand_new_tile]);
         }
         else
         {
-            Organism* defender = world->get_organism(tile_x[rand_new_tile], tile_y[rand_new_tile]);
+            Organism* defender = world->get_organism(t_x[rand_new_tile], t_y[rand_new_tile]);
 
            defender->collision(this);
         }
+}
+
+void Animal::action()
+{
+    int tile_x[25]; 
+    int tile_y[25];
+    int tiles_count = 0;
+
+    get_adjacent_tiles(position_x, position_y, get_move_range(), tiles_count, tile_x, tile_y, false);
+
+    if(tiles_count > 0)
+    {
+        move_animal_to_random_tile(tiles_count, tile_x, tile_y);
     }
 }
 
 void Animal::collision(Organism* organism)
 {
+    if(this->has_deflected_attack(organism))
+    {
+        return;
+    }
+
     if(this->draw() == organism->draw())
     {
         reproduce(organism);
@@ -70,19 +68,7 @@ void Animal::reproduce(Organism* organism)
     int free_tile_y[9];
     int free_tiles_count = 0;
 
-    for(int i = organism->get_position_y() - 1; i <= organism->get_position_y() + 1; i++)
-    {
-        for(int j = organism->get_position_x() - 1; j <= organism->get_position_x() + 1; j++)
-        {
-            if (j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && world->is_tile_free(j, i))
-            //checking if the tile is free (not occupied by any organism) and if it is in map bounds
-            {
-                free_tile_x[free_tiles_count] = j;
-                free_tile_y[free_tiles_count] = i;
-                free_tiles_count++;
-            }
-        }
-    }
+    get_adjacent_tiles(organism->get_position_x(), organism->get_position_y(), 1, free_tiles_count, free_tile_x, free_tile_y, true);
 
     if(free_tiles_count > 0)
     {
@@ -107,7 +93,12 @@ void Animal::fight(Organism* organism)
     }
 }
 
-bool Animal::is_animal()
+bool Animal::is_animal() const
 {
     return true;
+}
+
+int Animal::get_move_range() const
+{
+    return 1;
 }

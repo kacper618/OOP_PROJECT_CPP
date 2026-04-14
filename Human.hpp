@@ -5,7 +5,7 @@ class Human: public Animal
 {
     public:
         Human(int x, int y, World* w);
-        char draw() override;
+        char draw() const override;
         Organism* clone(int x, int y) override;
         void action() override;
         void magical_potion();

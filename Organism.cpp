@@ -1,35 +1,37 @@
 #include "Organism.hpp"
+#include "Constants.hpp"
+#include "World.hpp"
 
 Organism::~Organism()
 {
 }
 
-int Organism::get_position_x()
+int Organism::get_position_x() const
 {
     return position_x;
 }
 
-int Organism::get_position_y()
+int Organism::get_position_y() const
 {
     return position_y;
 }
 
-int Organism::get_initiative()
+int Organism::get_initiative() const
 {
     return initiative;
 }
 
-int Organism::get_strength()
+int Organism::get_strength() const
 {
     return strength;
 }
 
-bool Organism::get_is_dead()
+bool Organism::get_is_dead() const
 {
     return is_dead;
 }
 
-bool Organism::is_animal()
+bool Organism::is_animal() const
 {
     return false;
 }
@@ -54,13 +56,40 @@ void Organism::set_strength(int s)
     strength = s;
 }
 
-int Organism::get_age()
+int Organism::get_age() const
 {
     return age;
 }
 
-
 void Organism::increment_age()
 {
     age++;
+}
+
+void Organism::get_adjacent_tiles(int organism_x, int organism_y, int range, int& t_count, int t_x[], int t_y[], bool only_free)
+{
+    t_count = 0;
+
+    for(int i = organism_y - range; i <= organism_y + range; i++) //checking all tiles in 3x3 square around the current organism position
+    {
+        for(int j = organism_x - range; j <= organism_x + range; j++)
+        {
+            if(j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && (j != organism_x || i != organism_y)) //checking if tile is on map and if it is not current organism position
+            {
+                if(only_free && world->get_organism(j, i) != nullptr) //if free tiles are required, occupied ones are ommited
+                {
+                    continue;
+                }
+
+                t_x[t_count] = j;
+                t_y[t_count] = i;
+                t_count++;
+            }
+        }
+    }
+}
+
+bool Organism::has_deflected_attack(Organism* organism) const
+{
+    return false;
 }

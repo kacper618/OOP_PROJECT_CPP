@@ -8,7 +8,7 @@ Sow_thistle::Sow_thistle(int x, int y, World* w)
 {
 }
 
-char Sow_thistle::draw()
+char Sow_thistle::draw() const
 {
     return 'O';
 }

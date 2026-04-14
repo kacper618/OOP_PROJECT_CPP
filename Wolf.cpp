@@ -8,7 +8,7 @@ Wolf::Wolf(int x, int y, World* w)
 {
 }
 
-char Wolf::draw()
+char Wolf::draw() const
 {
     return 'W';
 }

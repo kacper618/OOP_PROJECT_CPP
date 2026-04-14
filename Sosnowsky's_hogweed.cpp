@@ -9,7 +9,7 @@ Hogweed::Hogweed(int x, int y, World* w)
 {
 }
 
-char Hogweed::draw()
+char Hogweed::draw() const
 {
     return 'X';
 }
@@ -28,20 +28,21 @@ void Hogweed::collision(Organism* organism)
 
 void Hogweed::action()
 {
-    for(int i = position_y - 1; i <= position_y + 1; i++)
-    {
-        for(int j = position_x - 1; j <= position_x + 1; j++)
+   int tile_x[9];
+   int tile_y[9];
+   int tiles_count = 0;
+
+   get_adjacent_tiles(position_x, position_y, 1, tiles_count, tile_x, tile_y, false);\
+
+   for(int i = 0; i < tiles_count; i++)
+   {
+        Organism* org = world->get_organism(tile_x[i], tile_y[i]);
+
+        if(org != nullptr && org->is_animal())
         {
-            if (j >= 0 && j < MAP_X && i >= 0 && i < MAP_Y && (i != position_y || j != position_x))
-            {
-                Organism* org = world->get_organism(j, i);
-                if(org != nullptr && org->is_animal())
-                {
-                    org->set_is_dead(true);
-                }
-            }
+            org->set_is_dead(true);
         }
-    }
+   }
 
     Plant::action();
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "Constants.hpp"
 
 class Organism;
@@ -23,4 +24,6 @@ class World
         static bool compare_organisms(Organism* a, Organism* b);
         void set_human_dir(char dir);
         char get_human_dir() const;
+        void save_game(std::string filename) const;
+        void load_game(std::string filename);
 };

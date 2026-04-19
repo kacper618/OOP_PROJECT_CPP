@@ -22,6 +22,7 @@ class Organism
         virtual ~Organism();
         virtual bool is_animal() const;
         virtual bool has_deflected_attack(Organism* organism) const;
+        virtual std::string get_save_data() const;
         int get_initiative() const;
         int get_strength() const;
         int get_age() const;
@@ -32,5 +33,6 @@ class Organism
         void set_position_y(int y);
         void set_is_dead(bool d);
         void set_strength(int s);
+        void set_age(int a);
         void increment_age();
 };

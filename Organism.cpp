@@ -1,6 +1,9 @@
+#include <string>
 #include "Organism.hpp"
 #include "Constants.hpp"
 #include "World.hpp"
+
+using namespace std;
 
 Organism::~Organism()
 {
@@ -56,6 +59,11 @@ void Organism::set_strength(int s)
     strength = s;
 }
 
+void Organism::set_age(int a)
+{
+    age = a;
+}
+
 int Organism::get_age() const
 {
     return age;
@@ -92,4 +100,13 @@ void Organism::get_adjacent_tiles(int organism_x, int organism_y, int range, int
 bool Organism::has_deflected_attack(Organism* organism) const
 {
     return false;
+}
+
+string Organism::get_save_data() const
+{
+    return string(1, this->draw()) + " " +
+    to_string(position_x) + " " +
+    to_string(position_y) + " " +
+    to_string(strength) + " " +
+    to_string(age);
 }

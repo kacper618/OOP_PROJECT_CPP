@@ -11,7 +11,7 @@
 #include "Sow_thistle.hpp"
 #include "Guarana.hpp"
 #include "Belladonna.hpp"
-#include "Sosnowsky's_hogweed.hpp"
+#include "Hogweed.hpp"
 #include "Fox.hpp"
 #include "Turtle.hpp"
 #include "Antelope.hpp"
@@ -89,6 +89,18 @@ int main()
         {
             break;
         }
+        else if(key_input == 'z' || key_input == 'Z')
+        {
+            world.save_game("save.txt");
+            cout << "----GAME SAVED---" << endl;
+        }
+        else if(key_input == 'x' || key_input == 'X')
+        {
+            world.load_game("save.txt");
+            system("cls");
+            world.draw_world();
+            cout << "---GAME LOADED----" << endl;
+        }
 
         if(key_input == 'w' || key_input == 'a' || key_input == 's' || key_input == 'd' || key_input == 'e' || 
            key_input == 'W' || key_input == 'A' || key_input == 'S' || key_input == 'D' || key_input == 'E')
@@ -106,6 +118,6 @@ int main()
             world.draw_world();
         }
     }
-    
+
     return 0;
 }

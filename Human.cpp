@@ -73,3 +73,20 @@ string Human::organism_name()
 {
     return "Human";
 }
+
+string Human::get_save_data() const
+{
+    return Organism::get_save_data() + " " +
+    to_string(potion_duration) + " " +
+    to_string(potion_cooldown);
+}
+
+void Human::set_potion_cooldown(int c)
+{
+    potion_cooldown = c;
+}
+
+void Human::set_potion_duration(int d)
+{
+    potion_duration = d;
+}

@@ -1,7 +1,20 @@
 #include <iostream>
 #include <algorithm>
+#include <fstream>
+#include <string>
 #include "World.hpp"
 #include "Organism.hpp"
+#include "Wolf.hpp"
+#include "Sheep.hpp"
+#include "Fox.hpp"
+#include "Turtle.hpp"
+#include "Antelope.hpp"
+#include "Human.hpp"
+#include "Grass.hpp"
+#include "Sow_thistle.hpp"
+#include "Guarana.hpp"
+#include "Belladonna.hpp"
+#include "Hogweed.hpp"
 
 using namespace std;
 
@@ -142,4 +155,80 @@ char World::get_human_dir() const
 void World::set_human_dir(char dir)
 {
     human_dir = dir;
+}
+
+void World::save_game(string filename) const
+{
+    ofstream file(filename);
+    if(file.is_open())
+    {
+        file << turn_number << endl;
+
+        for(size_t i = 0; i < organisms.size(); i++)
+        {
+            file << organisms[i]->get_save_data() << endl;
+        } 
+        file.close();
+    }
+}
+
+void World::load_game(string filename)
+{
+    ifstream file(filename);
+
+    if(!file.is_open()) return;
+
+    for(size_t i = 0; i < organisms.size(); i++)
+    {
+        delete organisms[i];
+    }
+
+    organisms.clear();
+
+    for(size_t i = 0; i < MAP_Y; i++)
+    {
+        for(size_t j = 0; j < MAP_X; j++)
+        {
+            world_map[i][j] = nullptr;
+        }
+    }
+
+    file >> turn_number;
+
+    char org_char;
+    int x, y, s, a;
+
+    while(file >> org_char >> x >> y >> s >> a)
+    {
+        Organism* organism = nullptr;
+
+        if(org_char == 'W') { organism = new Wolf(x, y, this); }
+        else if(org_char == 'S') { organism = new Sheep(x, y, this); }
+        else if(org_char == 'F') { organism = new Fox(x, y, this); }
+        else if(org_char == 'T') { organism = new Turtle(x, y, this); }
+        else if(org_char == 'A') { organism = new Antelope(x, y, this); }
+        else if(org_char == 'G') { organism = new Grass(x, y, this); }
+        else if(org_char == 'O') { organism = new Sow_thistle(x, y, this); }
+        else if(org_char == 'U') { organism = new Guarana(x, y, this); }
+        else if(org_char == 'B') { organism = new Belladonna(x, y, this); }
+        else if(org_char == 'X') { organism = new Hogweed(x, y, this); }
+        else if(org_char == 'H')
+        {
+            int p_dur, p_cd;
+            file >> p_dur >> p_cd;
+            Human* H = new Human(x, y, this);
+            H->set_potion_cooldown(p_cd);
+            H->set_potion_duration(p_dur);
+            organism = H;
+        }
+
+        if(organism != nullptr)
+        {
+            organism->set_strength(s);
+            organism->set_age(a);
+            world_map[y][x] = organism;
+            organisms.push_back(organism);
+        }
+    }
+    file.close();
 }

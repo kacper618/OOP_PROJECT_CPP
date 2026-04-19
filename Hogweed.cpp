@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Sosnowsky's_hogweed.hpp"
+#include "Hogweed.hpp"
 #include "World.hpp"
 
 using namespace std;

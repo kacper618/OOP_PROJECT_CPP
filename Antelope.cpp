@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Antelope.hpp"
 #include "World.hpp"
+#include "Constants.hpp"
 
 using namespace std;
 
@@ -20,9 +21,9 @@ Organism* Antelope::clone(int x, int y)
     return new Antelope(x, y, this->world);
 }
 
-void Antelope::fight(Organism* organism)
+void Antelope::fight(Organism* attacker)
 {
-    int escape_chance = rand() % 2; //0 or 1
+    int escape_chance = rand() % ANTELOPE_ESCAPE_CHANCE; //0 or 1
 
     if(escape_chance == 1) 
     {
@@ -38,13 +39,13 @@ void Antelope::fight(Organism* organism)
             int old_y = position_y;
 
             world->move_organism(this, free_x[rand_tile], free_y[rand_tile]);
-            world->move_organism(organism, old_x, old_y);
+            world->move_organism(attacker, old_x, old_y);
             
             return; 
         }
     }
 
-    Animal::fight(organism); 
+    Animal::fight(attacker); 
 }
 
 int Antelope::get_move_range() const

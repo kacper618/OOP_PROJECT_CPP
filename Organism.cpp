@@ -7,6 +7,8 @@ using namespace std;
 
 Organism::~Organism()
 {
+    // virtual destructor ensuring that derived class base destructors 
+    // are properly called when an object is deleted via a base class pointer
 }
 
 int Organism::get_position_x() const
@@ -97,13 +99,15 @@ void Organism::get_adjacent_tiles(int organism_x, int organism_y, int range, int
     }
 }
 
-bool Organism::has_deflected_attack(Organism* organism) const
+bool Organism::has_deflected_attack(Organism* attacker) const
 {
     return false;
 }
 
 string Organism::get_save_data() const
 {
+    // he char returned by draw is converted to a string of length 1
+    // to allow concatenation with other converted integer values
     return string(1, this->draw()) + " " +
     to_string(position_x) + " " +
     to_string(position_y) + " " +

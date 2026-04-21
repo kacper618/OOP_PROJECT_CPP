@@ -19,11 +19,11 @@ Organism* Belladonna::clone(int x, int y)
     return new Belladonna(x, y, this->world);
 }
 
-void Belladonna::collision(Organism* organism)
+void Belladonna::collision(Organism* attacker)
 {
-    organism->set_is_dead(true);
+    attacker->set_is_dead(true);
 
-    Plant::collision(organism);
+    Plant::collision(attacker);
 }
 
 string Belladonna::organism_name()

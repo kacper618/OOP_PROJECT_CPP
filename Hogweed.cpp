@@ -20,11 +20,11 @@ Organism* Hogweed::clone(int x, int y)
     return new Hogweed(x, y, this->world);
 }
 
-void Hogweed::collision(Organism* organism)
+void Hogweed::collision(Organism* attacker)
 {
-    organism->set_is_dead(true);
+    attacker->set_is_dead(true);
 
-    Plant::collision(organism);
+    Plant::collision(attacker);
 }
 
 void Hogweed::action()

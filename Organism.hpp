@@ -15,13 +15,13 @@ class Organism
 
     public:
         virtual void action() = 0;
-        virtual void collision(Organism* organism) = 0;
+        virtual void collision(Organism* attacker) = 0;
         virtual char draw() const = 0;
         virtual Organism* clone(int x, int y) = 0;
         virtual std::string organism_name() = 0;
         virtual ~Organism();
         virtual bool is_animal() const;
-        virtual bool has_deflected_attack(Organism* organism) const;
+        virtual bool has_deflected_attack(Organism* attacker) const;
         virtual std::string get_save_data() const;
         int get_initiative() const;
         int get_strength() const;

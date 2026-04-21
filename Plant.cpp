@@ -40,8 +40,8 @@ void Plant::action()
         
 }
 
-void Plant::collision(Organism* organism)
+void Plant::collision(Organism* attacker)
 {
     this->set_is_dead(true);
-    world->move_organism(organism, this->position_x, this->position_y);
+    world->move_organism(attacker, this->position_x, this->position_y);
 }

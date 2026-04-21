@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Guarana.hpp"
+#include "Constants.hpp"
 
 using namespace std;
 
@@ -19,11 +20,11 @@ Organism* Guarana::clone(int x, int y)
     return new Guarana(x, y, this->world);
 }
 
-void Guarana::collision(Organism* organism)
+void Guarana::collision(Organism* attacker)
 {
-    organism->set_strength(organism->get_strength() + 3);
+    attacker->set_strength(attacker->get_strength() + GUARANA_STRENGTH_BONUS);
 
-    Plant::collision(organism);
+    Plant::collision(attacker);
 }
 
 string Guarana::organism_name()

@@ -45,30 +45,30 @@ void Animal::action()
     }
 }
 
-void Animal::collision(Organism* organism)
+void Animal::collision(Organism* attacker)
 {
-    if(this->has_deflected_attack(organism))
+    if(this->has_deflected_attack(attacker))
     {
         return;
     }
 
-    if(this->draw() == organism->draw())
+    if(this->draw() == attacker->draw())
     {
-        reproduce(organism);
+        reproduce(attacker);
     }
     else
     {
-        fight(organism);
+        fight(attacker);
     }
 }
 
-void Animal::reproduce(Organism* organism)
+void Animal::reproduce(Organism* partner)
 {
     int free_tile_x[9];
     int free_tile_y[9];
     int free_tiles_count = 0;
 
-    get_adjacent_tiles(organism->get_position_x(), organism->get_position_y(), 1, free_tiles_count, free_tile_x, free_tile_y, true);
+    get_adjacent_tiles(partner->get_position_x(), partner->get_position_y(), 1, free_tiles_count, free_tile_x, free_tile_y, true);
 
     if(free_tiles_count > 0)
     {
@@ -79,23 +79,23 @@ void Animal::reproduce(Organism* organism)
     }
 }
 
-void Animal::fight(Organism* organism)
+void Animal::fight(Organism* attacker)
 {
-    if(organism->get_strength() >= this->strength)
+    if(attacker->get_strength() >= this->strength)
     {
-        world->move_organism(organism, this->get_position_x(), this->get_position_y());
+        world->move_organism(attacker, this->get_position_x(), this->get_position_y());
         
         this->set_is_dead(true);
         
-        cout << this->organism_name() << " was attacked and killed by " << organism->organism_name() 
-        << ": (" << organism->get_position_y() << ", " << organism->get_position_y() << ")" << endl;
+        cout << this->organism_name() << " was attacked and killed by " << attacker->organism_name() 
+        << ": (" << attacker->get_position_y() << ", " << attacker->get_position_x() << ")" << endl;
     }
     else
     {
-        organism->set_is_dead(true);
+        attacker->set_is_dead(true);
 
-        cout << this->organism_name() << " defended itself from " << organism->organism_name() 
-        << ": (" << this->get_position_y() << ", " << this->get_position_y() << ")" << endl;
+        cout << this->organism_name() << " defended itself from " << attacker->organism_name() 
+        << ": (" << this->get_position_y() << ", " << this->get_position_x() << ")" << endl;
     }
 }
 

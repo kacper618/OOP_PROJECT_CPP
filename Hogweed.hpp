@@ -7,7 +7,7 @@ class Hogweed: public Plant
         Hogweed(int x, int y, World* w);
         char draw() const override;
         Organism* clone(int x, int y) override;
-        void collision(Organism* organism) override;
+        void collision(Organism* attacker) override;
         void action() override;
         std::string organism_name() override;
 };

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Turtle.hpp"
+#include "Constants.hpp"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ Organism* Turtle::clone(int x, int y)
 
 void Turtle::action()
 {
-    int move_chance = rand() % 4;
+    int move_chance = rand() % TURTLE_MOVE_CHANCE;
 
     if(move_chance == 0) //25% chance to move
     {
@@ -29,9 +30,9 @@ void Turtle::action()
     }
 }
 
-bool Turtle::has_deflected_attack(Organism* organism) const
+bool Turtle::has_deflected_attack(Organism* attacker) const
 {
-    return true;
+    return attacker->get_strength() < TURTLE_DEFENSE_THRESHOLD;
 }
 
 string Turtle::organism_name()

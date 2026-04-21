@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Sow_thistle.hpp"
+#include "Constants.hpp"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ Organism* Sow_thistle::clone(int x, int y)
 
 void Sow_thistle::action()
 {
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < SOW_THISTLE_ATTEMPTS; i++)
     {
         Plant::action();
     }

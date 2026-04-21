@@ -76,7 +76,7 @@ int main()
     {
         int key_input = getch(); 
 
-        if(key_input == 224 || key_input == 0) ////detecting arrows and changing them to WSAD
+        if(key_input == 224 || key_input == 0) //detecting arrows and changing them to WSAD
         {
             key_input = getch(); 
             if(key_input == KEY_UP) key_input = 'w'; 
@@ -110,9 +110,9 @@ int main()
             world.make_turn();
             world.draw_world();
         }
-        else if(key_input == ' ')
+        else if(key_input == ' ') //human stands still
         {
-            world.set_human_dir(' '); //human stands still
+            world.set_human_dir(' '); 
             system("cls");
             world.make_turn();
             world.draw_world();

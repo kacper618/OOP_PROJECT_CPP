@@ -8,6 +8,6 @@ class Turtle: public Animal
         char draw() const override;
         Organism* clone(int x, int y) override;
         void action() override;
-        bool has_deflected_attack(Organism* organism) const override;
+        bool has_deflected_attack(Organism* attacker) const override;
         std::string organism_name() override;
 };

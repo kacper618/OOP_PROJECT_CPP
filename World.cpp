@@ -20,6 +20,8 @@ using namespace std;
 
 World::World()
 {
+    // initialization of an empty board with nullptr pointers 
+    // to avoid undefined behavior (garbage values in memory)
     for(int i = 0; i < MAP_Y; i++)
     {
         for(int j = 0; j < MAP_X; j++)
@@ -31,6 +33,8 @@ World::World()
 
 World::~World()
 {
+    // heap memory cleanup for all dynamically allocated organisms
+    // this is crucial to avoid memory leaks when closing the game
     for(size_t i=0; i<organisms.size(); i++)
     {
         delete organisms[i];
@@ -42,17 +46,19 @@ Organism* World::get_organism(int x, int y) const
     return world_map[y][x];
 }
 
+// moves the organism to new coordinates, updating both its internal state 
+// and the map grid (clears the old tile, assigns the pointer to the new one)
 void World::move_organism(Organism* organism, int x, int y)
 {
     int old_x = organism->get_position_x();
     int old_y = organism->get_position_y();
 
-    world_map[old_y][old_x] = nullptr; //cleaning old position
+    world_map[old_y][old_x] = nullptr; // cleaning old position
 
     organism->set_position_x(x);
     organism->set_position_y(y);
 
-    world_map[y][x] = organism;
+    world_map[y][x] = organism; // updating the new position on the map
 }
 
 void World::draw_world() const
@@ -69,6 +75,7 @@ void World::draw_world() const
             }
             else
             {
+                // using polymorphism to draw the appropriate organism character
                 cout << world_map[i][j]->draw() << " ";
             }
         }
@@ -76,6 +83,8 @@ void World::draw_world() const
     }
 }
 
+// comparator used to sort the vector of organisms
+// rule: higher initiative moves first, in case of a tie, age decides (older moves first)
 bool World::compare_organisms(Organism* a, Organism* b) 
 {
     if(a->get_initiative() != b->get_initiative())
@@ -88,42 +97,51 @@ bool World::compare_organisms(Organism* a, Organism* b)
     }
 }
 
+// main loop controlling the turn, responsible for determining the order,
+// calling actions for each organism, and cleaning the board of dead units
 void World::make_turn()
 {
     turn_number++;  
 
+    // 1. sorting organisms before executing moves
     sort(organisms.begin(), organisms.end(), compare_organisms);
 
+    // 2. actions
     for(size_t i = 0; i < organisms.size(); i++)
     {
         if(organisms[i]->get_is_dead())
         {
-            continue;
+            continue; // dead organisms cannot perform actions in the same turn they died
         }
 
         if(organisms[i]->get_age() > 0)
         {
-            organisms[i]->action();
+            organisms[i]->action(); // call of each species' unique mechanics
         }
     }
 
+    // 3. aging all organisms
     for(size_t i = 0; i < organisms.size(); i++)
     {
         organisms[i]->increment_age();
     }
 
+    // 4. cleanup
+    // he loop goes backwards to prevent
+    // index shifting in the vector after using the erase function.
     for(int i = organisms.size() - 1; i >= 0; i--)
     {
         if(organisms[i]->get_is_dead())
         {
+            // if the object is still on the map, remove it
             if(world_map[organisms[i]->get_position_y()][organisms[i]->get_position_x()] == organisms[i])
             {
                 world_map[organisms[i]->get_position_y()][organisms[i]->get_position_x()] = nullptr;
             }
             
-            delete organisms[i];
+            delete organisms[i]; // memory deallocation
             
-            organisms.erase(organisms.begin() + i);
+            organisms.erase(organisms.begin() + i); // removing the pointer from vector
         }
     }
 }
@@ -144,7 +162,7 @@ void World::add_organism(Organism* organism)
 
     organisms.push_back(organism);
 
-    organism->increment_age();
+    organism->increment_age(); // initial aging so the organism knows it's no longer a "newborn"
 }
 
 char World::get_human_dir() const
@@ -157,6 +175,7 @@ void World::set_human_dir(char dir)
     human_dir = dir;
 }
 
+// saves the information necessary to represent the world in text file
 void World::save_game(string filename) const
 {
     ofstream file(filename);
@@ -164,6 +183,7 @@ void World::save_game(string filename) const
     {
         file << turn_number << endl;
 
+        // each organism generates its own text representation
         for(size_t i = 0; i < organisms.size(); i++)
         {
             file << organisms[i]->get_save_data() << endl;
@@ -172,12 +192,14 @@ void World::save_game(string filename) const
     }
 }
 
+// clears the current board, then loads and allocates new organisms based on text file
 void World::load_game(string filename)
 {
     ifstream file(filename);
 
     if(!file.is_open()) return;
 
+    // 1. destroying the current world to make room for the loaded one
     for(size_t i = 0; i < organisms.size(); i++)
     {
         delete organisms[i];
@@ -193,15 +215,18 @@ void World::load_game(string filename)
         }
     }
 
+    // 2. loading data
     file >> turn_number;
 
     char org_char;
     int x, y, s, a;
 
+    // the loop fetches basic attributes (common to every organism)
     while(file >> org_char >> x >> y >> s >> a)
     {
         Organism* organism = nullptr;
 
+        // "Factory" 
         if(org_char == 'W') { organism = new Wolf(x, y, this); }
         else if(org_char == 'S') { organism = new Sheep(x, y, this); }
         else if(org_char == 'F') { organism = new Fox(x, y, this); }
@@ -213,7 +238,8 @@ void World::load_game(string filename)
         else if(org_char == 'B') { organism = new Belladonna(x, y, this); }
         else if(org_char == 'X') { organism = new Hogweed(x, y, this); }
         else if(org_char == 'H')
-        {
+        {   
+            // handling unique parameters for the Human
             int p_dur, p_cd;
             file >> p_dur >> p_cd;
             Human* H = new Human(x, y, this);
@@ -222,6 +248,7 @@ void World::load_game(string filename)
             organism = H;
         }
 
+        // assigning parameters and placing on map
         if(organism != nullptr)
         {
             organism->set_strength(s);
